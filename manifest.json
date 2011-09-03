@@ -1,0 +1,27 @@
+{
+  "name" : "Inside Out Browser",
+  "version" : "0.3",
+  "description" : "Shows a page's source before showing the content of the page.",
+  "background_page" : "background.html",
+  "page_action" :
+  {
+    "default_icon" : "html-19.png",
+    "default_title" : "Source-Driven Browsing!"
+  },
+  "content_scripts" : [
+    {
+      "matches" : [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js" : ["jquery.min.js","underscore-min.js","contentscript.js"],
+      "css": ["style.css"],
+      "run_at" : "document_start",
+      "all_frames" : false
+    }
+  ],
+  "icons" : {
+    "48" : "html-48.png",
+    "128" : "html-128.png"
+  }
+}
