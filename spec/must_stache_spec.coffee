@@ -32,7 +32,10 @@ describe "#swapImageSources", ->
   it "replaces the source of a second image", ->
     expect($img2).toHaveAttr('src','pants winning')
     
-xdescribe "#mustachifyImages", ->
-  
-    
+describe "#mustachifyImages", ->
+  it "swaps all the images out with mustaches", ->
+    spyOn(mustStache, "swapImageSources")    
+    mustStache.mustachifyImages();    
+    expect(mustStache.swapImageSources).toHaveBeenCalledWith(mustStache.mustachifyUrl)
+      
 xdescribe 'initiating the Chrome', ->
