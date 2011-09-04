@@ -33,19 +33,33 @@ describe "MustStache", ->
     
   describe "#swapImageSources", ->
     $img1=img1Src=$img2=img2Src=null
+    suffix='-winning'
     beforeEach ->
+      spyOn($, "get")
       $img1 = $.jasmine.inject('<img src="panda"/>')
       $img2 = $.jasmine.inject('<img src="pants"/>')  
       img1Src = $img1[0].src
       img2Src = $img2[0].src
    
-      mustStache.swapImageSources((src) -> src+'-winning');
+      mustStache.swapImageSources((src) -> src+suffix);
     
-    it "replaces the source of an image", ->
-      expect($img1).toHaveAttr('src',img1Src+'-winning')
+    context "upon verifying the first image", ->
+      beforeEach -> $.get.calls[0].args[1]()
+      
+      it "verifies the mustachified url", ->
+        expect($.get.calls[0].args[0]).toBe(img1Src+suffix)
+
+      it "replaces the source of an image", ->
+        expect($img1).toHaveAttr('src',img1Src+suffix)
     
-    it "replaces the source of a second image", ->
-      expect($img2).toHaveAttr('src',img2Src+'-winning')
+    context "upon verifying the second image", ->
+      beforeEach -> $.get.calls[1].args[1]()
+
+      it "verifies the mustachified url", ->
+        expect($.get.calls[1].args[0]).toBe(img2Src+suffix)
+      
+      it "replaces the source of a second image", ->
+        expect($img2).toHaveAttr('src',img2Src+suffix)
     
   describe "#mustachifyImages", ->
     it "swaps all the images out with mustaches", ->
