@@ -1,12 +1,12 @@
 {
-  "name" : "Inside Out Browser",
-  "version" : "0.3",
-  "description" : "Shows a page's source before showing the content of the page.",
+  "name" : "Must Stache",
+  "version" : "0.0.1",
+  "description" : "Finds faces, adds staches.",
   "background_page" : "background.html",
   "page_action" :
   {
     "default_icon" : "html-19.png",
-    "default_title" : "Source-Driven Browsing!"
+    "default_title" : "Mustaches for everyone!"
   },
   "content_scripts" : [
     {
