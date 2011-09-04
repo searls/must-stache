@@ -1,0 +1,14 @@
+src_files:
+  # Load order dependency
+  - "lib/vendor/**/*.{js,coffee}"
+  - "lib/**/*.{js,coffee}"
+
+helpers:
+  - "helpers/**/*.{js,coffee}"
+
+spec_files:
+  - "**/*[Ss]pec.{js,coffee}"
+
+src_dir:
+
+spec_dir: spec

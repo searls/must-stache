@@ -14,7 +14,7 @@
         "http://*/*",
         "https://*/*"
       ],
-      "js" : ["jquery.min.js","underscore-min.js","contentscript.js"],
+      "js" : ["vendor/jquery.min.js","vendor/underscore-min.js","vendor/contentscript.js"],
       "css": ["style.css"],
       "run_at" : "document_start",
       "all_frames" : false
