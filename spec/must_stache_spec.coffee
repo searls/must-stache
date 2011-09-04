@@ -34,6 +34,11 @@ describe "MustStache", ->
     it "begin polling for mustaches", ->
       expect(mustStache.beginPolling).toHaveBeenCalled()
 
+  describe "#mustachifyImages", ->
+    it "swaps all the images out with mustaches", ->
+      spyOn(mustStache, "swapImageSources")
+      mustStache.mustachifyImages();
+      expect(mustStache.swapImageSources).toHaveBeenCalledWith(mustStache.mustachifyUrl)
 
   describe '#mustachifyUrl', ->
     it 'prepends the URL with the mustachify API', ->
@@ -51,19 +56,18 @@ describe "MustStache", ->
       it "replaces the source of an image", ->
         expect(config.img).toHaveAttr('src',config.expectedUrl)
 
-
   describe "#swapImageSources", ->
     context "an image has an empty src URL", ->
-      it "does no ajax", ->
+      $img = null
+      beforeEach ->
         $img = injectImg('')
         spyOn($, "get")
         mustStache.swapImageSources()
+
+      it "does no ajax", ->
         expect($.get).not.toHaveBeenCalled()
 
       it "leaves the empty src as-was", ->
-        $img = injectImg('')
-        spyOn($, "get")
-        mustStache.swapImageSources()
         expect($img).toHaveAttr('src',"")
 
     context "two images with valid src URLs", ->
@@ -81,14 +85,6 @@ describe "MustStache", ->
             expectedUrl: $imgs[i][0].src+suffix
             actualUrl: $.get.calls[i].args[0],
             callback: $.get.calls[i].args[1]
-
-  describe "#mustachifyImages", ->
-    it "swaps all the images out with mustaches", ->
-      spyOn(mustStache, "swapImageSources")
-      mustStache.mustachifyImages();
-      expect(mustStache.swapImageSources).toHaveBeenCalledWith(mustStache.mustachifyUrl)
-
-    it "aborts the ajax if `src` is blank"
 
   describe "#beginPolling", ->
     beforeEach ->
