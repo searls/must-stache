@@ -11,26 +11,22 @@ describe '#mustachifyUrl', ->
     url = 'http://partytime.com'
     result = mustStache.mustachifyUrl(url)
     expect(result).toEqual 'http://mustachify.me/?src='+url
-
-  xit 'encodes the URL', ->
-    url = 'http://partytime.com?ask=yes&party=pants'
-    result = mustStache.mustachifyUrl(url)
-    expect(result).toEndWith $.URLEncode(url)
     
 describe "#swapImageSources", ->
-  $img1=$img2=actor=null
+  $img1=img1Src=$img2=img2Src=null
   beforeEach ->
     $img1 = $.jasmine.inject('<img src="panda"/>')
-    $img2 = $.jasmine.inject('<img src="pants"/>')
-    actor = (src) -> src+' winning' 
-    
-    mustStache.swapImageSources(actor);
+    $img2 = $.jasmine.inject('<img src="pants"/>')  
+    img1Src = $img1[0].src
+    img2Src = $img2[0].src
+   
+    mustStache.swapImageSources((src) -> src+'-winning');
     
   it "replaces the source of an image", ->
-    expect($img1).toHaveAttr('src','panda winning')
+    expect($img1).toHaveAttr('src',img1Src+'-winning')
     
   it "replaces the source of a second image", ->
-    expect($img2).toHaveAttr('src','pants winning')
+    expect($img2).toHaveAttr('src',img2Src+'-winning')
     
 describe "#mustachifyImages", ->
   it "swaps all the images out with mustaches", ->
