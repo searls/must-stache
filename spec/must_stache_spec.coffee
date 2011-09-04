@@ -121,4 +121,14 @@ describe "MustStache", ->
             actualUrl: $.get.mostRecentCall.args[0],
             callback: $.get.mostRecentCall.args[1]
 
+      context "multiple polling cycles before ajax return", ->
+        $img=null
+        beforeEach ->
+          $img = injectImg('some-other-url')
+          pollingFunction()
+          pollingFunction()
+          pollingFunction()
+
+        it "only makes one ajax call", ->
+          expect($.get.callCount).toBe(1)
 
