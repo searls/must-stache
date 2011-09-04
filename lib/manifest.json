@@ -5,7 +5,7 @@
   "background_page" : "background.html",
   "page_action" :
   {
-    "default_icon" : "html-19.png",
+    "default_icon" : "stache-19.png",
     "default_title" : "Mustaches for everyone!"
   },
   "content_scripts" : [
@@ -21,7 +21,7 @@
     }
   ],
   "icons" : {
-    "48" : "html-48.png",
-    "128" : "html-128.png"
+    "48" : "stache-48.png",
+    "128" : "stache-128.png"
   }
 }

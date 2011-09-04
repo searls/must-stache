@@ -92,7 +92,7 @@ describe "MustStache", ->
       mustStache.beginPolling();
 
     it "sets interval", ->
-      expect(window.setInterval.mostRecentCall.args[1]).toBe(1000)
+      expect(window.setInterval.mostRecentCall.args[1]).toBe(333)
 
     describe "~the polling method", ->
       pollingFunction=null
