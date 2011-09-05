@@ -1,0 +1,15 @@
+ul {
+  list-style-type: none;
+}
+
+ul li {
+  line-height: 2;
+}
+
+.hidden {
+  display: none;
+}
+
+.save-alert {
+  color: green;
+}

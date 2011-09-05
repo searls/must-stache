@@ -3,6 +3,7 @@
   "version" : "0.0.4",
   "description" : "Finds faces, adds staches.",
   "background_page" : "background.html",
+  "options_page" : "views/options.html",
   "page_action" :
   {
     "default_icon" : "stache-19.png",

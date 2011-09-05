@@ -1,0 +1,44 @@
+<html>
+  <head>
+    <title>Must Stache Configuration</title>
+    <link rel="stylesheet" type="text/css" href="../css/must-stache.css"/>
+
+    <script type="text/javascript" src="../vendor/jquery.min.js"></script>
+    <script type="text/javascript" src="../vendor/underscore-min.js"></script>
+    <script type="text/javascript" src="../vendor/underscore.string.min.js"></script>
+    <script type="text/javascript" src="../vendor/extend-min.js"></script>
+    <script type="text/javascript" src="../js/must_stache.js"></script>
+    <script type="text/javascript" src="../js/options.js"></script>
+  </head>
+  <body>
+
+    <h1>Must Stache Configuration</h1>
+
+    <div>
+      <p>Must Stache requires the face.com web service to function (in short, the extension sends it all the images on the page, then face.com returns the location of all the noses).</p>
+      <p>To use Must Stache, you'll need to <a href="http://developers.face.com/signup/?g">sign up</a> at face.com for your own API key.</p>
+      <p>Once you have your own API Key and API Secret, enter them here:</p>
+    </div>
+
+    <div>
+      <form id="configurationForm">
+          <ul>
+            <li>
+              <label for="faceComApiKey">API Key</label>
+              <input id="faceComApiKey" type="text"/>
+            </li>
+            <li>
+              <label for="faceComApiSecret">API Secret</label>
+              <input id ="faceComApiSecret" type="text">
+            </li>
+            <li>
+              <button id="saveConfiguration">Save</button>
+              <span class="save-alert hidden">Changes saved!</span>
+            </li>
+          </ul>
+      </form>
+    </div>
+
+
+  </body>
+</html>
