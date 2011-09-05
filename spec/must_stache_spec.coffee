@@ -56,6 +56,16 @@ describe "MustStache", ->
       it "replaces the source of an image", ->
         expect(config.img).toHaveAttr('src',config.expectedUrl)
 
+  itLimitsRequests = (method,args) ->
+    context "too many images for the API to handle", ->
+      beforeEach ->
+        spyOn($, "get")
+        $imgs = _([1..51]).each -> injectImg('panda')
+        method.apply(this,args);
+
+      it "only makes that many AJAX requests", ->
+        expect($.get.callCount).toBe(50)
+
   describe "#swapImageSources", ->
     context "an image has an empty src URL", ->
       $img = null
@@ -86,6 +96,9 @@ describe "MustStache", ->
             actualUrl: $.get.calls[i].args[0],
             callback: $.get.calls[i].args[1]
 
+    it "limits requests", ->
+      itLimitsRequests(mustStache.swapImageSources,[(src) -> src])
+
   describe "#beginPolling", ->
     beforeEach ->
       spyOn(window, "setInterval")
@@ -107,6 +120,9 @@ describe "MustStache", ->
 
         it "does not attempt to make an AJAX call", ->
           expect($.get).not.toHaveBeenCalled()
+
+      it "limits requests", ->
+        itLimitsRequests(pollingFunction)
 
       context "an image starts with some other URL", ->
         $img=null
