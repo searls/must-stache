@@ -11,7 +11,7 @@ beforeEach ->
       _(this.actual).endsWith(string)
 
 describe "MustStache", ->
-  apiUrl = 'http://mustachify.me/?src='
+  apiUrl = 'http://must-stache.heroku.com/?src='
   mustStache = null
   beforeEach -> mustStache = MustStache()
 
