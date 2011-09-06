@@ -2,6 +2,11 @@
 <html>
   <head>
     <title>Must Stache</title>
+    <script type="text/javascript">
+      chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
+        sendResponse(localStorage);
+      });
+    </script>
   </head>
   <body></body>
 </html>

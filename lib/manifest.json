@@ -1,6 +1,6 @@
 {
   "name" : "Must Stache",
-  "version" : "0.0.4",
+  "version" : "0.0.5",
   "description" : "Finds faces, adds staches.",
   "background_page" : "background.html",
   "options_page" : "views/options.html",
@@ -15,7 +15,7 @@
         "http://*/*",
         "https://*/*"
       ],
-      "js" : ["vendor/jquery.min.js","vendor/underscore-min.js", "vendor/underscore.string.min.js", "must_stache.js"],
+      "js" : ["vendor/jquery.min.js","vendor/underscore-min.js", "vendor/underscore.string.min.js", "vendor/extend-min.js", "js/canvas.js", "js/mustachio-port.js", "js/must_stache.js"],
       "css": ["style.css"],
       "run_at" : "document_start",
       "all_frames" : false
