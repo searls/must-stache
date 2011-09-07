@@ -2,13 +2,7 @@
   "name" : "Must Stache",
   "version" : "0.0.5",
   "description" : "Finds faces, adds staches.",
-  "background_page" : "background.html",
-  "options_page" : "views/options.html",
-  "page_action" :
-  {
-    "default_icon" : "stache-19.png",
-    "default_title" : "Mustaches for everyone!"
-  },
+  "background_page" : "views/background.html",
   "content_scripts" : [
     {
       "matches" : [
@@ -25,6 +19,11 @@
     "http://*/*",
     "https://*/*"
   ],
+  "browser_action": {
+    "default_icon": "stache-19.png",
+    "default_title": "Must Stache",
+    "default_popup": "views/popover.html"
+  },
   "icons" : {
     "48" : "stache-48.png",
     "128" : "stache-128.png"

@@ -13,3 +13,19 @@ ul li {
 .save-alert {
   color: green;
 }
+
+.mustache-popover {
+  overflow-x: hidden;
+  overflow-y: visible;
+  min-height:100px;
+  max-height:600px;
+}
+
+.options-form {
+  max-width: 400px;
+  padding: 10px 20px 10px 0px;
+}
+
+html {
+  overflow-y: auto;
+}
