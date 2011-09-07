@@ -30,6 +30,10 @@ ul li {
   padding-left: 20px;
 }
 
+#configurationForm div.error {
+  margin-right: -10px;
+}
+
 html {
   overflow-y: auto;
 }
