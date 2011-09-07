@@ -1,0 +1,39 @@
+ul {
+  list-style-type: none;
+}
+
+ul li {
+  line-height: 2;
+}
+
+.hidden {
+  display: none;
+}
+
+.save-alert {
+  color: green;
+}
+
+.mustache-popover {
+  overflow-x: hidden;
+  overflow-y: visible;
+  min-height:100px;
+  max-height:600px;
+}
+
+.options-form {
+  max-width: 400px;
+  padding: 10px 20px 10px 0px;
+}
+
+.danger-zone {
+  padding-left: 20px;
+}
+
+#configurationForm div.error {
+  margin-right: -10px;
+}
+
+html {
+  overflow-y: auto;
+}

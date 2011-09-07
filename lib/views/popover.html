@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap-1.2.0.min.css">
+    <link rel="stylesheet" href="../css/must-stache.css">
+
+    <script type="text/javascript" src="../vendor/jquery.min.js"></script>
+    <script type="text/javascript" src="../vendor/underscore-min.js"></script>
+    <script type="text/javascript" src="../vendor/underscore.string.min.js"></script>
+    <script type="text/javascript" src="../vendor/extend-min.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.js"></script>
+    <script type="text/javascript" src="../js/storage.js"></script>
+    <script type="text/javascript" src="../js/forms.js"></script>
+    <script type="text/javascript" src="../js/views/options.js"></script>
+
+    <script type="text/html" id="dangerZoneTemplate">
+      <div class="well">
+        <span>Must Stache is <strong span="mustacheStatus"><%= enabled ? 'enabled' : 'disabled' %></strong>.</span>
+        <% if(enabled) { %>
+          <button id="toggleEnabledButton" class="btn danger <%= enabled ? '' : 'hidden' %>">Disable</button>
+        <% } else { %>
+          <button id="toggleEnabledButton" class="btn success <%= enabled ? 'hidden' : '' %>">Enable</button>
+        <% } %>
+      </div>
+    </script>
+  </head>
+  <body class="mustache-popover">
+    <div class="options-form">
+      <section>
+        <form id="configurationForm" action="" class="form-stacked">
+          <fieldset>
+            <legend>Must Stache</legend>
+            <span class="help-block">
+              <strong>Note:</strong> the face.com web service is used to detect faces. <a href="http://developers.face.com/signup/?g" target="new">Sign up</a> at face.com, then enter your API key to use Must Stache
+            </span>
+            <div class="clearfix">
+              <label for="faceComApiKey">face.com api key</label>
+              <div class="input">
+                <input class="xlarge required" id="faceComApiKey" name="faceComApiKey" size="30" type="text">
+              </div>
+            </div>
+            <div class="clearfix">
+              <label for="faceComApiSecret">face.com api secret</label>
+              <div class="input">
+                <input class="xlarge required" id="faceComApiSecret" name="faceComApiSecret" size="30" type="text">
+              </div>
+            </div>
+          </fieldset>
+          <div>
+            <button id="saveButton" type="submit" class="btn primary">Save Changes</button>&nbsp;<button id="cancelButton" type="reset" class="btn">Cancel</button>
+          </div>
+        </form>
+      </section>
+      <section class="danger-zone">
+
+      </section>
+    </div>
+
+  </body>
+</html>
