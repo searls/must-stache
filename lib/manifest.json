@@ -9,7 +9,7 @@
         "http://*/*",
         "https://*/*"
       ],
-      "js" : ["vendor/jquery.min.js","vendor/underscore-min.js", "vendor/underscore.string.min.js", "vendor/extend-min.js", "js/bootstrap.js", "js/canvas.js", "js/face-api-math.js", "js/must-stache.js"],
+      "js" : ["vendor/jquery.min.js","vendor/underscore-min.js", "vendor/underscore.string.min.js", "vendor/extend-min.js", "js/bootstrap.js", "js/forms.js","js/storage.js","js/canvas.js", "js/face-api-math.js", "js/views/must-stache.js"],
       "css": ["style.css"],
       "run_at" : "document_start",
       "all_frames" : false
