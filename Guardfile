@@ -10,7 +10,10 @@ spec_location = "spec/%s_spec"
 # spec_location = "spec/javascripts/%sSpec"
 
 guard 'jasmine-headless-webkit' do
-  watch(%r{^lib/(.*)\.(js|coffee)$}) { |m| newest_js_file(spec_location % m[1]) }
-  watch(%r{^spec/(.*)_spec\..*}) { |m| newest_js_file(spec_location % m[1]) }
+  watch(%r{^spec/helpers/(.*)\.(js|coffee)$})
+  watch(%r{^spec/static-stubs/(.*)\.(js|coffee)$})
+  watch(%r{^lib/vendor/(.*)\.(js|coffee)$})
+  watch(%r{^lib/js/(.*)\.(js|coffee)$}) { |m| newest_js_file(spec_location % m[1]) }
+  watch(%r{^spec/(.*)(\_|\-)spec\..*}) { |m| newest_js_file(spec_location % m[1]) }
 end
 

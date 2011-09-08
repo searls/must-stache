@@ -1,7 +1,9 @@
 src_files:
   # Load order dependency
+  - "spec/static-stubs/chrome.js"
+  - "lib/vendor/underscore-min.js"
   - "lib/vendor/**/*.{js,coffee}"
-  - "lib/**/*.{js,coffee}"
+  - "lib/js/**/*.{js,coffee}"
 
 helpers:
   - "helpers/**/*.{js,coffee}"
