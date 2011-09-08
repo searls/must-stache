@@ -6,7 +6,6 @@ describe "MustStache.canvas", ->
       SIZE = { width: 5, height: 10 }
       IMAGE = new Image()
 
-
     context "without a transformer defined", ->
       beforeEach ->
         result = M.canvas.createCanvas(SIZE,IMAGE,TRANSFORMER)
