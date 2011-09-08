@@ -6,10 +6,11 @@ src_files:
   - "lib/js/**/*.{js,coffee}"
 
 helpers:
+  - "helpers/spec-helper.coffee"
   - "helpers/**/*.{js,coffee}"
 
 spec_files:
-  - "**/*[Ss]pec.{js,coffee}"
+  - "**/*spec.{js,coffee}"
 
 src_dir:
 
