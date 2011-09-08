@@ -1,7 +1,40 @@
 describe "MustStache.canvas", ->
 
   describe "#createCanvas", ->
+    result=SIZE=IMAGE=TRANSFORMER=null
+    beforeEach ->
+      SIZE = { width: 5, height: 10 }
+      IMAGE = new Image()
 
+
+    context "without a transformer defined", ->
+      beforeEach ->
+        result = M.canvas.createCanvas(SIZE,IMAGE,TRANSFORMER)
+
+      it "applies the width", ->
+        expect(result.width).toBe(SIZE.width)
+
+      it "applies the height", ->
+        expect(result.height).toBe(SIZE.height)
+
+      it "draws the image", ->
+        expect(result.toDataURL()).toEqual(expectedCanvasDataUrl())
+
+      expectedCanvasDataUrl = ->
+        canvas = document.createElement('canvas')
+        canvasContext = canvas.getContext('2d')
+        canvas.width = SIZE.width;
+        canvas.height = SIZE.height;
+        canvasContext.drawImage(IMAGE, 0, 0);
+        canvas.toDataURL()
+
+    context "with a transformer function passed", ->
+      beforeEach ->
+        TRANSFORMER = jasmine.createSpy("transformer")
+        result = M.canvas.createCanvas(SIZE,IMAGE,TRANSFORMER)
+
+      it "passes the context to the transformer", ->
+        expect(TRANSFORMER).toHaveBeenCalledWith(result.getContext('2d'))
 
   describe "#paintCanvas", ->
     CANVAS=CTX=CONFIG=null
