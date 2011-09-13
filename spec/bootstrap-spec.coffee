@@ -8,9 +8,6 @@ describe "bootstrap", ->
   it "defines MustStache._", ->
     expect(MustStache._([null,1,undefined]).compact()).toEqual([1])
 
-  it "relinquishes window._", ->
-    expect(_).not.toBeDefined()
-
   it "relinquishes window.extend", ->
     expect(extend).not.toBeDefined()
 
