@@ -3,8 +3,17 @@ describe "MustStache.canvas", ->
   describe "#createCanvas", ->
     result=SIZE=IMAGE=TRANSFORMER=null
     beforeEach ->
-      SIZE = { width: 5, height: 10 }
+      SIZE = { width: 3, height: 5 }
       IMAGE = new Image()
+      IMAGE.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAAFCAYAAACAcVaiAAAAEklEQVR42mP4z8DwH4YZyOAAAMufHeNmMS0JAAAAAElFTkSuQmCC"
+
+    expectedCanvasDataUrl = ->
+      canvas = document.createElement('canvas')
+      canvasContext = canvas.getContext('2d')
+      canvas.width = SIZE.width;
+      canvas.height = SIZE.height;
+      canvasContext.drawImage(IMAGE, 0, 0);
+      canvas.toDataURL()
 
     context "without a transformer defined", ->
       beforeEach ->
@@ -18,14 +27,6 @@ describe "MustStache.canvas", ->
 
       it "draws the image", ->
         expect(result.toDataURL()).toEqual(expectedCanvasDataUrl())
-
-      expectedCanvasDataUrl = ->
-        canvas = document.createElement('canvas')
-        canvasContext = canvas.getContext('2d')
-        canvas.width = SIZE.width;
-        canvas.height = SIZE.height;
-        canvasContext.drawImage(IMAGE, 0, 0);
-        canvas.toDataURL()
 
     context "with a transformer function passed", ->
       beforeEach ->
@@ -51,7 +52,9 @@ describe "MustStache.canvas", ->
       }
       CANVAS = {
         getContext: jasmine.createSpy('canvas#getContext').andCallFake((type) -> if type == '2d' then CTX),
-        toDataURL: jasmine.createSpy('canvas#toDataURL')
+        toDataURL: jasmine.createSpy('canvas#toDataURL'),
+        height: 123,
+        width: 456
       }
       spyOn(M.canvas, "createCanvas").andReturn(CANVAS)
       spyOn(M.faceApi, "processMustaches")
@@ -66,6 +69,12 @@ describe "MustStache.canvas", ->
 
     it "passes configured photo data to the MustStache.faceApi", ->
       expect(faceApiConfig().photoData).toBe(CONFIG.photoData)
+
+    it "alters the height of the photo data to match the canvas", ->
+      expect(faceApiConfig().photoData.height).toEqual(CANVAS.height)
+
+    it "alters the width of the photo data to match the canvas", ->
+      expect(faceApiConfig().photoData.width).toEqual(CANVAS.width)
 
     describe "~onRenderMustache", ->
       TRANSFORM_PARAMS = [0,1,2,4]
