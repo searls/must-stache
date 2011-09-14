@@ -1,6 +1,6 @@
 describe "faceApi", ->
   describe "processMustaches", ->
-    PERCENTAGE_BASED_PHOTO_DATA = "original photo data from face.com"
+    PERCENTAGE_BASED_PHOTO_DATA = { tags: 'blah' }
     onComplete=onRenderMustache=PHOTOS=null
     beforeEach ->
       PHOTOS =
@@ -16,7 +16,8 @@ describe "faceApi", ->
             nose: {y: 24}
           }]
       spyOn(M.faceApi, "photoToPx").andCallFake (data) ->
-        PHOTOS if data == PERCENTAGE_BASED_PHOTO_DATA
+        expect(data).toEqual(PERCENTAGE_BASED_PHOTO_DATA)
+        PHOTOS
 
       M.faceApi.processMustaches
         photoData: PERCENTAGE_BASED_PHOTO_DATA
@@ -55,7 +56,7 @@ describe "faceApi", ->
       expect(onComplete).toHaveBeenCalled()
 
   describe "photoToPx", ->
-    photo=null
+    result=photo=null
     beforeEach ->
       photo = {
         width: 50,
@@ -68,25 +69,23 @@ describe "faceApi", ->
           tag[attr] = { x: .34, y: .83 }
         photo.tags.push tag
 
-      M.faceApi.photoToPx(photo)
+      result = M.faceApi.photoToPx(photo)
 
     it "multiplies each point by 100", ->
-      _(photo.tags).each (tag) ->
+      _(result.tags).each (tag) ->
         _(M.faceApi.FACE_POS_ATTRS).each (attr) ->
-          expect(tag[attr].x).toPrettyMuchEqual(.34 * photo.width / 100.0)
-          expect(tag[attr].y).toPrettyMuchEqual(.83 * photo.height / 100.0)
-
+          expect(tag[attr].x).toPrettyMuchEqual(.34 * result.width / 100.0)
+          expect(tag[attr].y).toPrettyMuchEqual(.83 * result.height / 100.0)
 
     context "data has already been converted to pixels", ->
-      noseAttr=null
+      result2=null
       beforeEach ->
-        noseAttr = _(photo.tags[0].nose).clone()
-
-        M.faceApi.photoToPx(photo)
+        result = M.faceApi.photoToPx(photo)
+        result2 = M.faceApi.photoToPx(photo)
 
 
       it "does not change the nose attribute further", ->
-        expect(photo.tags[0].nose).toEqual(noseAttr)
+        expect(result).toEqual(result2)
 
 
 
