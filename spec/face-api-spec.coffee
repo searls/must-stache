@@ -55,3 +55,32 @@ describe "faceApi", ->
       expect(onComplete).toHaveBeenCalled()
 
   describe "photoToPx", ->
+    photo=null
+    beforeEach ->
+      photo = {
+        width: 50,
+        height: 75
+        tags: []
+      }
+      for i in [0..9]
+        tag = {}
+        _(M.faceApi.FACE_POS_ATTRS).each (attr) ->
+          tag[attr] = { x: .34, y: .83 }
+        photo.tags.push tag
+
+      M.faceApi.photoToPx(photo)
+
+    it "multiplies each point by 100", ->
+      _(photo.tags).each (tag) ->
+        _(M.faceApi.FACE_POS_ATTRS).each (attr) ->
+          expect(tag[attr].x).toPrettyMuchEqual(.34 * photo.width / 100.0)
+          expect(tag[attr].y).toPrettyMuchEqual(.83 * photo.height / 100.0)
+
+
+
+
+
+    context "data has already been converted to pixels", ->
+
+
+
