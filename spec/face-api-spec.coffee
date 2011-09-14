@@ -77,10 +77,16 @@ describe "faceApi", ->
           expect(tag[attr].y).toPrettyMuchEqual(.83 * photo.height / 100.0)
 
 
-
-
-
     context "data has already been converted to pixels", ->
+      noseAttr=null
+      beforeEach ->
+        noseAttr = _(photo.tags[0].nose).clone()
+
+        M.faceApi.photoToPx(photo)
+
+
+      it "does not change the nose attribute further", ->
+        expect(photo.tags[0].nose).toEqual(noseAttr)
 
 
 
