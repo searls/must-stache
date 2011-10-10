@@ -11,6 +11,7 @@
     <script type="text/javascript" src="../js/bootstrap.js"></script>
     <script type="text/javascript" src="../js/storage.js"></script>
     <script type="text/javascript" src="../js/forms.js"></script>
+    <script type="text/javascript" src="../js/views/background.js"></script>
     <script type="text/javascript" src="../js/views/options.js"></script>
 
     <script type="text/html" id="dangerZoneTemplate">
@@ -30,19 +31,28 @@
         <form id="configurationForm" action="" class="form-stacked">
           <fieldset>
             <legend>Must Stache</legend>
-            <span class="help-block">
+            <div class="help-block">
+            <p>
               <strong>Note:</strong> the face.com web service is used to detect faces. <a href="http://developers.face.com/signup/?g" target="new">Sign up</a> at face.com, then enter your API key to use Must Stache
-            </span>
-            <div class="clearfix">
-              <label for="faceComApiKey">face.com api key</label>
-              <div class="input">
-                <input class="xlarge required" id="faceComApiKey" name="faceComApiKey" size="30" type="text">
+            </p>
+            <p>
+              After creating an application, click below to snag the API key and secret.
+            </p>
+            <div class="apikey">
+              <div class="capture-api-key-button">
+                <a id="captureApiKeyButton" class="btn info large">Capture API Key</a>
               </div>
-            </div>
-            <div class="clearfix">
-              <label for="faceComApiSecret">face.com api secret</label>
-              <div class="input">
-                <input class="xlarge required" id="faceComApiSecret" name="faceComApiSecret" size="30" type="text">
+              <div class="clearfix">
+                <label for="faceComApiKey">face.com api key</label>
+                <div class="input">
+                  <input class="xlarge required" id="faceComApiKey" name="faceComApiKey" size="30" type="text">
+                </div>
+              </div>
+              <div class="clearfix">
+                <label for="faceComApiSecret">face.com api secret</label>
+                <div class="input">
+                  <input class="xlarge required" id="faceComApiSecret" name="faceComApiSecret" size="30" type="text">
+                </div>
               </div>
             </div>
           </fieldset>
