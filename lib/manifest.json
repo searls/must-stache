@@ -1,6 +1,6 @@
 {
   "name" : "Must Stache",
-  "version" : "0.0.8-DEV",
+  "version" : "0.0.8",
   "description" : "Finds faces, adds staches.",
   "background_page" : "views/background.html",
   "content_scripts" : [
