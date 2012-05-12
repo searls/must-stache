@@ -30,10 +30,9 @@
   };
 
   var renderDangerZone = function() {
-    var templated = _.template($("#dangerZoneTemplate").html() || "", {
+    $('.options-form').html(JST['templates/popover']({
       enabled: M.storage.extensionEnabled()
-    });
-    $('.danger-zone').html(templated);
+    }));
   };
 
   var clicker = function(selector, whenClicked){

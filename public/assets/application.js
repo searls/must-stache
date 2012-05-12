@@ -452,10 +452,9 @@ window.extend.noConflict=function(){var a=window.extend;window.extend=i;return a
   };
 
   var renderDangerZone = function() {
-    var templated = _.template($("#dangerZoneTemplate").html() || "", {
+    $('.options-form').html(JST['templates/popover']({
       enabled: M.storage.extensionEnabled()
-    });
-    $('.danger-zone').html(templated);
+    }));
   };
 
   var clicker = function(selector, whenClicked){
@@ -468,6 +467,77 @@ window.extend.noConflict=function(){var a=window.extend;window.extend=i;return a
   M.options.init();
 
 })(MustStache,MustStache.$,MustStache._);
+(function() {
+  this.JST || (this.JST = {});
+  this.JST["templates/popover"] = function(__obj) {
+    if (!__obj) __obj = {};
+    var __out = [], __capture = function(callback) {
+      var out = __out, result;
+      __out = [];
+      callback.call(this);
+      result = __out.join('');
+      __out = out;
+      return __safe(result);
+    }, __sanitize = function(value) {
+      if (value && value.ecoSafe) {
+        return value;
+      } else if (typeof value !== 'undefined' && value != null) {
+        return __escape(value);
+      } else {
+        return '';
+      }
+    }, __safe, __objSafe = __obj.safe, __escape = __obj.escape;
+    __safe = __obj.safe = function(value) {
+      if (value && value.ecoSafe) {
+        return value;
+      } else {
+        if (!(typeof value !== 'undefined' && value != null)) value = '';
+        var result = new String(value);
+        result.ecoSafe = true;
+        return result;
+      }
+    };
+    if (!__escape) {
+      __escape = __obj.escape = function(value) {
+        return ('' + value)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      };
+    }
+    (function() {
+      (function() {
+      
+        __out.push('<h1>Must Stache</h1>\n\n<p class="js-instructions">\n  <ol>\n    <li><a href="http://developers.face.com/signup/">Sign up</a> for a face.com developer account</li>\n    <li>Verify your account and <a href="http://developers.face.com/new-application/">create a new application</a> (Only a name is required)</li>\n    <li>Must Stache will detect your face.com API key and start mustachifying images!</li>\n  </ol>\n</p>\n\n<section class="danger-zone">\n  <div class="well">\n    <span>Must Stache is <strong span="mustacheStatus">');
+      
+        __out.push(__sanitize(this.enabled ? 'enabled' : 'disabled'));
+      
+        __out.push('</strong>.</span>\n    ');
+      
+        if (this.enabled) {
+          __out.push('\n      <button id="toggleEnabledButton" class="btn btn-danger ');
+          if (!this.enabled) {
+            __out.push(__sanitize('hidden'));
+          }
+          __out.push('">Disable</button>\n    ');
+        } else {
+          __out.push('\n      <button id="toggleEnabledButton" class="btn btn-success ');
+          if (this.enabled) {
+            __out.push(__sanitize('hidden'));
+          }
+          __out.push('">Enable</button>\n    ');
+        }
+      
+        __out.push('\n  </div>\n</section>\n');
+      
+      }).call(this);
+      
+    }).call(__obj);
+    __obj.safe = __objSafe, __obj.escape = __escape;
+    return __out.join('');
+  };
+}).call(this);
 
 
 

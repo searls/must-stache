@@ -4,32 +4,7 @@
     <link rel="stylesheet" href="../assets/application.css">
   </head>
   <body class="mustache-popover">
-    <div class="options-form">
-      <h1>Must Stache</h1>
-
-      <section class="danger-zone"></section>
-
-      <p class="js-instructions">
-        <ol>
-          <li><a href="http://developers.face.com/signup/">Sign up</a> for a face.com developer account</li>
-          <li>Verify your account and <a href="http://developers.face.com/new-application/">create a new application</a> (Only a name is required)</li>
-          <li>Must Stache will detect your face.com API key and start mustachifying images!</li>
-        </ol>
-      </p>
-
-    </div>
-
-
+    <div class="options-form"></div>
     <script type="text/javascript" src="../assets/application.js"></script>
-    <script type="text/html" id="dangerZoneTemplate">
-      <div class="well">
-        <span>Must Stache is <strong span="mustacheStatus"><%= enabled ? 'enabled' : 'disabled' %></strong>.</span>
-        <% if(enabled) { %>
-          <button id="toggleEnabledButton" class="btn btn-danger <%= enabled ? '' : 'hidden' %>">Disable</button>
-        <% } else { %>
-          <button id="toggleEnabledButton" class="btn btn-success <%= enabled ? 'hidden' : '' %>">Enable</button>
-        <% } %>
-      </div>
-    </script>
   </body>
 </html>
