@@ -2,7 +2,7 @@ ul {
   list-style-type: none;
 }
 
-ul li {
+li {
   line-height: 2;
 }
 
@@ -15,10 +15,14 @@ ul li {
 }
 
 .mustache-popover {
+  /*
   overflow-x: hidden;
   overflow-y: visible;
   min-height:100px;
   max-height:600px;
+  */
+  width: 320px;
+
 }
 
 .options-form {
