@@ -155,6 +155,41 @@ window.extend.noConflict=function(){var a=window.extend;window.extend=i;return a
     FACE_POS_ATTRS: ['center', 'eye_left', 'eye_right', 'mouth_left', 'mouth_center', 'mouth_right', 'nose']
   });
 })(MustStache,MustStache.$,MustStache._);
+(function() {
+
+  (function(M, $, _) {
+    M.extend("faceApi.DetectsApiKey", function() {
+      var self, store;
+      self = {};
+      self.detect = function() {
+        store('faceComApiKey', {
+          ifWeCanFind: 'input[name="apiKey"]'
+        });
+        return store('faceComApiSecret', {
+          ifWeCanFind: 'input[name="apiSecret"]'
+        });
+      };
+      store = function(key, options) {
+        var $el;
+        $el = $(options.ifWeCanFind);
+        if ($el.length > 0 && !_($el.val()).isEmpty()) {
+          return chrome.extension.sendRequest({
+            type: 'setLocalStorageKey',
+            key: key,
+            value: $el.val()
+          });
+        }
+      };
+      return self;
+    });
+    return $(function() {
+      if (window.location.host === "developers.face.com") {
+        return M.faceApi.DetectsApiKey().detect();
+      }
+    });
+  })(MustStache, MustStache.$, MustStache._);
+
+}).call(this);
 (function(M,$,_) {
   M.extend('forms',{
     allInputsOn: function($form) {
@@ -166,88 +201,112 @@ window.extend.noConflict=function(){var a=window.extend;window.extend=i;return a
     }
   });
 })(MustStache,MustStache.$,MustStache._);
-(function(M,$,_) {
-  var storage = localStorage;
-  M.extend('storage',{
-    getStorage: function() {
-      return storage;
-    },
-    setStorage: function(override) {
-      storage = override;
-    },
-    saveOptionsOnForm: function($form) {
-      _(M.forms.allInputsOn($form)).each(function($input) {
-        storage[$input.attr('id')] = $input.val();
-      });
-    },
-    restoreOptionsOnForm: function($form) {
-      _(M.forms.allInputsOn($form)).each(function($input) {
-        $input.val(storage[$input.attr('id')]);
-      });
-    },
-    extensionEnabled: function() {
-      return storage['mustStacheExtensionStatus'] !== "disabled";
-    },
-    missingApiKeys: function() {
-      return !storage['faceComApiKey'] || !storage['faceComApiSecret'];
-    }
-  });
-})(MustStache,MustStache.$,MustStache._);
-(function(M,$,_) {
-  M.extend('background',{
-    registeredRequestTypes: {
-      localStorage: function(request, sender, sendResponse) {
-        sendResponse(M.storage.getStorage());
+(function() {
+
+  (function(M, $, _) {
+    var storage;
+    storage = localStorage;
+    return M.extend("storage", {
+      get: function(key) {
+        return storage[key];
       },
-      permissionToExecute: function(request, sender, sendResponse) {
-        if(!M.storage.missingApiKeys() && M.storage.extensionEnabled()) {
-          sendResponse(true);
-        } else {
-          sendResponse(false);
+      set: function(key, value) {
+        return storage[key] = value;
+      },
+      getStorage: function() {
+        return storage;
+      },
+      setStorage: function(override) {
+        return storage = override;
+      },
+      saveOptionsOnForm: function($form) {
+        return _(M.forms.allInputsOn($form)).each(function($input) {
+          return storage[$input.attr("id")] = $input.val();
+        });
+      },
+      restoreOptionsOnForm: function($form) {
+        return _(M.forms.allInputsOn($form)).each(function($input) {
+          return $input.val(storage[$input.attr("id")]);
+        });
+      },
+      extensionEnabled: function() {
+        return storage["mustStacheExtensionStatus"] !== "disabled";
+      },
+      missingApiKeys: function() {
+        return !storage["faceComApiKey"] || !storage["faceComApiSecret"];
+      }
+    });
+  })(MustStache, MustStache.$, MustStache._);
+
+}).call(this);
+(function() {
+
+  (function(M, $, _) {
+    M.extend("background", {
+      registeredRequestTypes: {
+        localStorage: function(request, sender, sendResponse) {
+          return sendResponse(M.storage.getStorage());
+        },
+        setLocalStorageKey: function(request, sender, sendResponse) {
+          return M.storage.set(request.key, request.value);
+        },
+        permissionToExecute: function(request, sender, sendResponse) {
+          if (!M.storage.missingApiKeys() && M.storage.extensionEnabled()) {
+            return sendResponse(true);
+          } else {
+            return sendResponse(false);
+          }
+        },
+        image: function(request, sender, sendResponse) {
+          var img, url;
+          url = (request.url === "img/mustache.png" ? chrome.extension.getURL("img/mustache.png") : request.url);
+          img = new Image();
+          img.onload = function() {
+            var canvas;
+            canvas = document.createElement("canvas");
+            canvas.width = img.width;
+            canvas.height = img.height;
+            canvas.getContext("2d").drawImage(img, 0, 0);
+            return sendResponse(canvas.toDataURL());
+          };
+          return img.src = url;
         }
       },
-      image: function(request, sender, sendResponse) {
-        var url = request.url === "img/mustache.png" ? chrome.extension.getURL("img/mustache.png") : request.url;
-        var img = new Image();
-        img.onload = function() {
-          var canvas = document.createElement('canvas');
-          canvas.width = img.width;
-          canvas.height = img.height;
-          canvas.getContext('2d').drawImage(img, 0, 0);
-          sendResponse(canvas.toDataURL());
-        };
-        img.src = url;
+      applyBadges: function() {
+        if (M.storage.missingApiKeys()) {
+          chrome.browserAction.setBadgeText({
+            text: "api"
+          });
+        } else {
+          chrome.browserAction.setBadgeText({
+            text: ""
+          });
+        }
+        if (!M.storage.extensionEnabled()) {
+          return chrome.browserAction.setIcon({
+            path: "../icon/stache-19-disabled.png"
+          });
+        } else {
+          return chrome.browserAction.setIcon({
+            path: "../icon/stache-19.png"
+          });
+        }
+      },
+      listenToExtensionRequests: function() {
+        return chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
+          return M.background.registeredRequestTypes[request.type].apply(this, arguments);
+        });
       }
-    },
-    applyBadges: function() {
-      if(M.storage.missingApiKeys()) {
-        chrome.browserAction.setBadgeText({text: "api"});
-      } else {
-        chrome.browserAction.setBadgeText({text: ""});
+    });
+    return $(function() {
+      if ($("body").hasClass("must-stache-background-script")) {
+        setInterval(M.background.applyBadges, 1000);
+        return M.background.listenToExtensionRequests();
       }
+    });
+  })(MustStache, MustStache.$, MustStache._);
 
-      if(!M.storage.extensionEnabled()) {
-        chrome.browserAction.setIcon({path: "../icon/stache-19-disabled.png"});
-      } else {
-        chrome.browserAction.setIcon({path: "../icon/stache-19.png"});
-      }
-    },
-    listenToExtensionRequests: function() {
-      chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
-        M.background.registeredRequestTypes[request.type].apply(this,arguments)
-      });
-    }
-  });
-
-
-  $(function() {
-    if($("body").hasClass('must-stache-background-script')) {
-      setInterval(M.background.applyBadges,1000);
-      M.background.listenToExtensionRequests();
-    }
-  });
-
-})(MustStache,MustStache.$,MustStache._);
+}).call(this);
 (function(M,$,_) {
   var mustacheImage,
       imageUrlMap = {},
