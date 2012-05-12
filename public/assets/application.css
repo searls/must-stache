@@ -25,23 +25,21 @@ li {
 }
 
 .mustache-popover {
-  /*
-  overflow-x: hidden;
-  overflow-y: visible;
-  min-height:100px;
-  max-height:600px;
-  */
-  width: 320px;
+  width: 330px;
+}
 
+#toggleEnabledButton {
+  display: inline-block;
+  margin-left: 20px;
 }
 
 .options-form {
   max-width: 400px;
-  padding: 10px 20px 10px 0px;
+  padding: 20px 20px 10px 20px;
 }
 
-.danger-zone {
-  padding-left: 20px;
+.options-form p {
+  margin-top: 10px;
 }
 
 #configurationForm div.error {

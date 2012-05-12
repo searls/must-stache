@@ -30,6 +30,7 @@
         chrome.browserAction.setBadgeText text: "api"
       else
         chrome.browserAction.setBadgeText text: ""
+
       unless M.storage.extensionEnabled()
         chrome.browserAction.setIcon path: "../icon/stache-19-disabled.png"
       else

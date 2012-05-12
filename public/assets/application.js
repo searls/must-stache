@@ -190,17 +190,6 @@ window.extend.noConflict=function(){var a=window.extend;window.extend=i;return a
   })(MustStache, MustStache.$, MustStache._);
 
 }).call(this);
-(function(M,$,_) {
-  M.extend('forms',{
-    allInputsOn: function($form) {
-      var $inputs = [];
-      $form.find(':input').each(function(i,el) {
-        $inputs.push($(el));
-      });
-      return $inputs;
-    }
-  });
-})(MustStache,MustStache.$,MustStache._);
 (function() {
 
   (function(M, $, _) {
@@ -423,37 +412,31 @@ window.extend.noConflict=function(){var a=window.extend;window.extend=i;return a
 (function(M,$,_) {
   M.extend('options',{
     init: function() {
-      $(document).ready(function() {
-        var $form = $('#configurationForm');
-        M.storage.restoreOptionsOnForm($form);
-        renderDangerZone();
-      });
-
       $(function() {
-        var $form = $('#configurationForm');
-        M.storage.restoreOptionsOnForm($form);
         renderDangerZone();
 
-        clicker('#saveButton',function() {
-          M.storage.saveOptionsOnForm($form);
-          window.close();
-        });
-        clicker('#cancelButton',function() {
-          window.close()
-        });
-        clicker('#toggleEnabledButton',toggleEnabled);
+        clicker('.disable-must-stache', disableMustStache);
+        clicker('.enable-must-stache', enableMustStache);
       });
     }
   });
 
-  var toggleEnabled = function() {
-    M.storage.getStorage()['mustStacheExtensionStatus'] = M.storage.extensionEnabled() ? "disabled" : "enabled";
+  var disableMustStache = function() {
+    M.storage.set('mustStacheExtensionStatus', "disabled");
+    renderDangerZone();
+  };
+
+  var enableMustStache = function() {
+    M.storage.set('mustStacheExtensionStatus', "enabled");
     renderDangerZone();
   };
 
   var renderDangerZone = function() {
     $('.options-form').html(JST['templates/popover']({
-      enabled: M.storage.extensionEnabled()
+      enabled: M.storage.extensionEnabled(),
+      apiHappy: !M.storage.missingApiKeys(),
+      apiKey: M.storage.get('faceComApiKey'),
+      apiSecret: M.storage.get('faceComApiSecret')
     }));
   };
 
@@ -509,20 +492,32 @@ window.extend.noConflict=function(){var a=window.extend;window.extend=i;return a
     (function() {
       (function() {
       
-        __out.push('<h1>Must Stache</h1>\n\n<p class="js-instructions">\n  <ol>\n    <li><a href="http://developers.face.com/signup/">Sign up</a> for a face.com developer account</li>\n    <li>Verify your account and <a href="http://developers.face.com/new-application/">create a new application</a> (Only a name is required)</li>\n    <li>Must Stache will detect your face.com API key and start mustachifying images!</li>\n  </ol>\n</p>\n\n<section class="danger-zone">\n  <div class="well">\n    <span>Must Stache is <strong span="mustacheStatus">');
+        __out.push('<h1>Must Stache</h1>\n\n\n');
+      
+        if (this.apiHappy) {
+          __out.push('\n  <p>We found your face.com API keys, yay!</p>\n  <p>\n    API key: <strong>');
+          __out.push(__sanitize(this.apiKey));
+          __out.push('</strong>\n    <br/>\n    API secret: <strong>');
+          __out.push(__sanitize(this.apiSecret));
+          __out.push('</strong>\n  </p>\n');
+        } else {
+          __out.push('\n<p class="js-instructions">\n  Before you can use Must Stache, you need to sign up for an API key from face.com.\n  <ol>\n    <li><a href="http://developers.face.com/signup/" target="new">Sign up</a> for a face.com developer account</li>\n    <li>Verify your account and <a href="http://developers.face.com/new-application/" target="new">create a new application</a> (Only a name is required)</li>\n    <li>Must Stache should detect your face.com API key and start mustachifying images!</li>\n  </ol>\n  If you\'ve created an application and are still seeing these instructions, find your application <a href="http://developers.face.com/account/" target="new">on this page</a> and click "Edit"\n</p>\n');
+        }
+      
+        __out.push('\n\n\n<section class="danger-zone">\n  <div class="well">\n    <span>Must Stache is <strong span="mustacheStatus">');
       
         __out.push(__sanitize(this.enabled ? 'enabled' : 'disabled'));
       
         __out.push('</strong>.</span>\n    ');
       
         if (this.enabled) {
-          __out.push('\n      <button id="toggleEnabledButton" class="btn btn-danger ');
+          __out.push('\n      <button id="toggleEnabledButton" class="disable-must-stache btn btn-danger ');
           if (!this.enabled) {
             __out.push(__sanitize('hidden'));
           }
           __out.push('">Disable</button>\n    ');
         } else {
-          __out.push('\n      <button id="toggleEnabledButton" class="btn btn-success ');
+          __out.push('\n      <button id="toggleEnabledButton" class="enable-must-stache btn btn-success ');
           if (this.enabled) {
             __out.push(__sanitize('hidden'));
           }

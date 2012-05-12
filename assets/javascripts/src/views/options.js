@@ -1,37 +1,31 @@
 (function(M,$,_) {
   M.extend('options',{
     init: function() {
-      $(document).ready(function() {
-        var $form = $('#configurationForm');
-        M.storage.restoreOptionsOnForm($form);
-        renderDangerZone();
-      });
-
       $(function() {
-        var $form = $('#configurationForm');
-        M.storage.restoreOptionsOnForm($form);
         renderDangerZone();
 
-        clicker('#saveButton',function() {
-          M.storage.saveOptionsOnForm($form);
-          window.close();
-        });
-        clicker('#cancelButton',function() {
-          window.close()
-        });
-        clicker('#toggleEnabledButton',toggleEnabled);
+        clicker('.disable-must-stache', disableMustStache);
+        clicker('.enable-must-stache', enableMustStache);
       });
     }
   });
 
-  var toggleEnabled = function() {
-    M.storage.getStorage()['mustStacheExtensionStatus'] = M.storage.extensionEnabled() ? "disabled" : "enabled";
+  var disableMustStache = function() {
+    M.storage.set('mustStacheExtensionStatus', "disabled");
+    renderDangerZone();
+  };
+
+  var enableMustStache = function() {
+    M.storage.set('mustStacheExtensionStatus', "enabled");
     renderDangerZone();
   };
 
   var renderDangerZone = function() {
     $('.options-form').html(JST['templates/popover']({
-      enabled: M.storage.extensionEnabled()
+      enabled: M.storage.extensionEnabled(),
+      apiHappy: !M.storage.missingApiKeys(),
+      apiKey: M.storage.get('faceComApiKey'),
+      apiSecret: M.storage.get('faceComApiSecret')
     }));
   };
 

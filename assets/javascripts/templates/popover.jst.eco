@@ -1,20 +1,33 @@
 <h1>Must Stache</h1>
 
+
+<% if @apiHappy: %>
+  <p>We found your face.com API keys, yay!</p>
+  <p>
+    API key: <strong><%= @apiKey %></strong>
+    <br/>
+    API secret: <strong><%= @apiSecret %></strong>
+  </p>
+<% else: %>
 <p class="js-instructions">
+  Before you can use Must Stache, you need to sign up for an API key from face.com.
   <ol>
-    <li><a href="http://developers.face.com/signup/">Sign up</a> for a face.com developer account</li>
-    <li>Verify your account and <a href="http://developers.face.com/new-application/">create a new application</a> (Only a name is required)</li>
-    <li>Must Stache will detect your face.com API key and start mustachifying images!</li>
+    <li><a href="http://developers.face.com/signup/" target="new">Sign up</a> for a face.com developer account</li>
+    <li>Verify your account and <a href="http://developers.face.com/new-application/" target="new">create a new application</a> (Only a name is required)</li>
+    <li>Must Stache should detect your face.com API key and start mustachifying images!</li>
   </ol>
+  If you've created an application and are still seeing these instructions, find your application <a href="http://developers.face.com/account/" target="new">on this page</a> and click "Edit"
 </p>
+<% end %>
+
 
 <section class="danger-zone">
   <div class="well">
     <span>Must Stache is <strong span="mustacheStatus"><%= if @enabled then 'enabled' else 'disabled' %></strong>.</span>
     <% if @enabled: %>
-      <button id="toggleEnabledButton" class="btn btn-danger <%= 'hidden' unless @enabled %>">Disable</button>
+      <button id="toggleEnabledButton" class="disable-must-stache btn btn-danger <%= 'hidden' unless @enabled %>">Disable</button>
     <% else: %>
-      <button id="toggleEnabledButton" class="btn btn-success <%= 'hidden' if @enabled %>">Enable</button>
+      <button id="toggleEnabledButton" class="enable-must-stache btn btn-success <%= 'hidden' if @enabled %>">Enable</button>
     <% end %>
   </div>
 </section>
