@@ -32,9 +32,9 @@
       }
 
       if(!M.storage.extensionEnabled()) {
-        chrome.browserAction.setIcon({path: "../stache-19-disabled.png"});
+        chrome.browserAction.setIcon({path: "../icon/stache-19-disabled.png"});
       } else {
-        chrome.browserAction.setIcon({path: "../stache-19.png"});
+        chrome.browserAction.setIcon({path: "../icon/stache-19.png"});
       }
     },
     listenToExtensionRequests: function() {
@@ -44,6 +44,12 @@
     }
   });
 
-  setInterval(M.background.applyBadges,1000);
-  M.background.listenToExtensionRequests();
+
+  $(function() {
+    if($("body").hasClass('must-stache-background-script')) {
+      setInterval(M.background.applyBadges,1000);
+      M.background.listenToExtensionRequests();
+    }
+  });
+
 })(MustStache,MustStache.$,MustStache._);

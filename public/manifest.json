@@ -9,7 +9,7 @@
         "http://*/*",
         "https://*/*"
       ],
-      "js" : ["vendor/jquery.min.js","vendor/underscore-min.js", "vendor/underscore.string.min.js", "vendor/extend-min.js", "js/bootstrap.js", "js/forms.js","js/storage.js","js/canvas.js", "js/face-api.js", "js/views/must-stache.js"],
+      "js": ["assets/application.js"],
       "run_at" : "document_start",
       "all_frames" : false
     }
@@ -19,12 +19,12 @@
     "https://*/*"
   ],
   "browser_action": {
-    "default_icon": "stache-19.png",
+    "default_icon": "icon/stache-19.png",
     "default_title": "Must Stache",
     "default_popup": "views/popover.html"
   },
   "icons" : {
-    "48" : "stache-48.png",
-    "128" : "stache-128.png"
+    "48" : "icon/stache-48.png",
+    "128" : "icon/stache-128.png"
   }
 }

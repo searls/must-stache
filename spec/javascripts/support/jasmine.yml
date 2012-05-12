@@ -1,9 +1,6 @@
 src_files:
-  # Load order dependency
-  - "spec/static-stubs/chrome.js"
-  - "lib/vendor/underscore-min.js"
-  - "lib/vendor/**/*.{js,coffee}"
-  - "lib/js/**/*.{js,coffee}"
+  - "../../spec/static-stubs/chrome.js"
+  - "application.js"
 
 helpers:
   - "helpers/spec-helper.coffee"
@@ -12,6 +9,6 @@ helpers:
 spec_files:
   - "**/*spec.{js,coffee}"
 
-src_dir:
+src_dir: "assets/javascripts"
 
 spec_dir: spec

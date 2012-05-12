@@ -1,28 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap-1.2.0.min.css">
-    <link rel="stylesheet" href="../css/must-stache.css">
-
-    <script type="text/javascript" src="../vendor/jquery.min.js"></script>
-    <script type="text/javascript" src="../vendor/underscore-min.js"></script>
-    <script type="text/javascript" src="../vendor/underscore.string.min.js"></script>
-    <script type="text/javascript" src="../vendor/extend-min.js"></script>
-    <script type="text/javascript" src="../js/bootstrap.js"></script>
-    <script type="text/javascript" src="../js/storage.js"></script>
-    <script type="text/javascript" src="../js/forms.js"></script>
-    <script type="text/javascript" src="../js/views/options.js"></script>
-
-    <script type="text/html" id="dangerZoneTemplate">
-      <div class="well">
-        <span>Must Stache is <strong span="mustacheStatus"><%= enabled ? 'enabled' : 'disabled' %></strong>.</span>
-        <% if(enabled) { %>
-          <button id="toggleEnabledButton" class="btn danger <%= enabled ? '' : 'hidden' %>">Disable</button>
-        <% } else { %>
-          <button id="toggleEnabledButton" class="btn success <%= enabled ? 'hidden' : '' %>">Enable</button>
-        <% } %>
-      </div>
-    </script>
+    <link rel="stylesheet" href="../assets/application.css">
   </head>
   <body class="mustache-popover">
     <div class="options-form">
@@ -56,5 +35,18 @@
       </section>
     </div>
 
+
+
+    <script type="text/javascript" src="../assets/application.js"></script>
+    <script type="text/html" id="dangerZoneTemplate">
+      <div class="well">
+        <span>Must Stache is <strong span="mustacheStatus"><%= enabled ? 'enabled' : 'disabled' %></strong>.</span>
+        <% if(enabled) { %>
+          <button id="toggleEnabledButton" class="btn danger <%= enabled ? '' : 'hidden' %>">Disable</button>
+        <% } else { %>
+          <button id="toggleEnabledButton" class="btn success <%= enabled ? 'hidden' : '' %>">Enable</button>
+        <% } %>
+      </div>
+    </script>
   </body>
 </html>
