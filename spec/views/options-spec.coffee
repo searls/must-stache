@@ -4,11 +4,11 @@ describe "Mustache options panel", ->
 
     beforeEach ->
       # Arrange
-      $dz = $.jasmine.inject("<div class='danger-zone' />")
+      $dz = $.jasmine.inject("<div class='options-form' />")
       $form = $.jasmine.inject("<div id=configurationForm />")
       spyOn(M.storage, "restoreOptionsOnForm")
       spyOn($.fn, "ready")
-      spyOn(M._, "template").andReturn("panda")
+      spyOn(window.JST, "templates/popover").andReturn("panda")
 
       # Act
       M.options.init()
