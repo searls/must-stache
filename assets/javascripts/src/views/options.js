@@ -1,12 +1,10 @@
 (function(M,$,_) {
   M.extend('options',{
     init: function() {
-      $(function() {
-        renderDangerZone();
+      renderDangerZone();
 
-        clicker('.disable-must-stache', disableMustStache);
-        clicker('.enable-must-stache', enableMustStache);
-      });
+      clicker('.disable-must-stache', disableMustStache);
+      clicker('.enable-must-stache', enableMustStache);
     }
   });
 
@@ -36,6 +34,9 @@
     });
   };
 
-  M.options.init();
-
+  $(function() {
+    if($('body').hasClass("mustache-popover")) {
+      M.options.init();
+    }
+  });
 })(MustStache,MustStache.$,MustStache._);

@@ -389,18 +389,20 @@ window.extend.noConflict=function(){var a=window.extend;window.extend=i;return a
     };
 
     $(document).ready(function() {
-      chrome.extension.sendRequest({type: 'permissionToExecute'}, function(allowedToRun) {
-        if(allowedToRun) {
-          chrome.extension.sendRequest({type: 'localStorage'}, function(backgroundLocalStorage) {
-            M.storage.setStorage(backgroundLocalStorage);
-            whenImageIsReady("img/mustache.png",function(image) {
-              mustacheImage = image;
-              self.mustachifyImages();
-              self.beginPolling();
+      if(!$('body').hasClass('must-stache-page')) {
+        chrome.extension.sendRequest({type: 'permissionToExecute'}, function(allowedToRun) {
+          if(allowedToRun) {
+            chrome.extension.sendRequest({type: 'localStorage'}, function(backgroundLocalStorage) {
+              M.storage.setStorage(backgroundLocalStorage);
+              whenImageIsReady("img/mustache.png",function(image) {
+                mustacheImage = image;
+                self.mustachifyImages();
+                self.beginPolling();
+              });
             });
-          });
-        }
-      });
+          }
+        });
+      }
     });
 
     return self;
@@ -412,12 +414,10 @@ window.extend.noConflict=function(){var a=window.extend;window.extend=i;return a
 (function(M,$,_) {
   M.extend('options',{
     init: function() {
-      $(function() {
-        renderDangerZone();
+      renderDangerZone();
 
-        clicker('.disable-must-stache', disableMustStache);
-        clicker('.enable-must-stache', enableMustStache);
-      });
+      clicker('.disable-must-stache', disableMustStache);
+      clicker('.enable-must-stache', enableMustStache);
     }
   });
 
@@ -447,8 +447,11 @@ window.extend.noConflict=function(){var a=window.extend;window.extend=i;return a
     });
   };
 
-  M.options.init();
-
+  $(function() {
+    if($('body').hasClass("mustache-popover")) {
+      M.options.init();
+    }
+  });
 })(MustStache,MustStache.$,MustStache._);
 (function() {
   this.JST || (this.JST = {});
