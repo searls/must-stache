@@ -91,18 +91,20 @@
     };
 
     $(document).ready(function() {
-      chrome.extension.sendRequest({type: 'permissionToExecute'}, function(allowedToRun) {
-        if(allowedToRun) {
-          chrome.extension.sendRequest({type: 'localStorage'}, function(backgroundLocalStorage) {
-            M.storage.setStorage(backgroundLocalStorage);
-            whenImageIsReady("img/mustache.png",function(image) {
-              mustacheImage = image;
-              self.mustachifyImages();
-              self.beginPolling();
+      if(!$('body').hasClass('must-stache-page')) {
+        chrome.extension.sendRequest({type: 'permissionToExecute'}, function(allowedToRun) {
+          if(allowedToRun) {
+            chrome.extension.sendRequest({type: 'localStorage'}, function(backgroundLocalStorage) {
+              M.storage.setStorage(backgroundLocalStorage);
+              whenImageIsReady("img/mustache.png",function(image) {
+                mustacheImage = image;
+                self.mustachifyImages();
+                self.beginPolling();
+              });
             });
-          });
-        }
-      });
+          }
+        });
+      }
     });
 
     return self;
